@@ -1,4 +1,4 @@
-const boardFactory = () => {
+const boardFactory = (player1, player2) => {
 
     const board = [
         ["", "", ""],
@@ -21,5 +21,13 @@ const boardFactory = () => {
 
 }
 
-const board = boardFactory()
+const playerFactory = (name, write) => {
+
+    return { name, write }
+
+}
+
+const board = boardFactory(
+    playerFactory('Javier', 'X'),
+    playerFactory('Lucas', '0'))
 board.fillBoard()
