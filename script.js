@@ -9,7 +9,7 @@ const boardFactory = (player1, player2) => {
     let turn = player1
 
     const nextTurn = () => {
-        if(turn === player1) turn = player2
+        if (turn === player1) turn = player2
         else turn = player1
     }
 
@@ -27,6 +27,29 @@ const boardFactory = (player1, player2) => {
         return cell
     }
 
+    const combinations = (player) => {
+        if(
+            (board[0][0] === player.brush && board[0][1] === player.brush && board[0][2] === player.brush)
+            ||(board[1][0] === player.brush && board[1][1] === player.brush && board[1][2] === player.brush)
+            ||(board[2][0] === player.brush && board[2][1] === player.brush && board[2][2] === player.brush)
+
+            ||(board[0][0] === player.brush && board[1][0] === player.brush && board[2][0] === player.brush)
+            ||(board[0][1] === player.brush && board[1][1] === player.brush && board[2][1] === player.brush)
+            ||(board[0][2] === player.brush && board[1][2] === player.brush && board[2][2] === player.brush)
+
+            ||(board[0][0] === player.brush && board[1][1] === player.brush && board[2][2] === player.brush)
+            ||(board[0][2] === player.brush && board[1][1] === player.brush && board[2][0] === player.brush)
+
+        ) return true
+        else return false
+    }
+
+    const checkWinner = (player1, player2) => {
+        if(combinations(player1)) return player1 
+        else if(combinations(player2)) return player
+        else return
+    }
+
     const fillCell = (row, col) => {
         const cell = setCellInfo(document.createElement('td'), row, col)
         if (cell.textContent == '') {
@@ -36,7 +59,7 @@ const boardFactory = (player1, player2) => {
                 clearBoard()
                 fillBoard()
             })
-        } 
+        }
         boardHTML.appendChild(cell)
     }
 
