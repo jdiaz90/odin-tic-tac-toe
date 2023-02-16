@@ -46,8 +46,15 @@ const boardFactory = (player1, player2) => {
 
     const checkWinner = (player1, player2) => {
         if(combinations(player1)) return player1 
-        else if(combinations(player2)) return player
-        else return
+        else if(combinations(player2)) return player2
+        else return null
+    }
+
+    const printWinner = (player) => {
+        if(player != null) {
+            alert(`${player.name} wins!`)
+            return true
+        } else return false
     }
 
     const fillCell = (row, col) => {
@@ -58,6 +65,7 @@ const boardFactory = (player1, player2) => {
                 nextTurn()
                 clearBoard()
                 fillBoard()
+                printWinner(checkWinner(player1, player2))
             })
         }
         boardHTML.appendChild(cell)
