@@ -21,12 +21,17 @@ const boardFactory = (player1, player2) => {
         return cell
     }
 
+    const brushCell = (cell, row, col) => {
+        cell.textContent = turn.brush
+        board[row][col] = turn.brush
+        return cell
+    }
+
     const fillCell = (row, col) => {
         const cell = setCellInfo(document.createElement('td'), row, col)
         if (cell.textContent == '') {
             cell.addEventListener('click', () => {
-                cell.textContent = turn.brush
-                board[row][col] = turn.brush
+                brushCell(cell, row, col)
                 nextTurn()
                 clearBoard()
                 fillBoard()
