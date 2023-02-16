@@ -3,19 +3,33 @@ const boardFactory = (player1, player2) => {
     const boardHTML = document.querySelector('.container')
     const board = [
         ["", "", ""],
-        ["", "X", ""],
-        ["", "", "O"],
+        ["", "", ""],
+        ["", "", ""],
     ]
+    let turn = player1
 
-    const fillCell = (row, col) => {
-        const cell = document.createElement('td')
-        cell.classList.add('cell')
+    const nextTurn = () => {
+        if(turn === player1) turn = player2
+        else turn = player1
+    }
+
+    const setCellInfo = (cell, row, col) => {
         cell.setAttribute('data-row', row)
         cell.setAttribute('data-col', col)
+        cell.classList.add('cell')
         cell.textContent = board[row][col]
+        return cell
+    }
+
+    const fillCell = (row, col) => {
+        const cell = setCellInfo(document.createElement('td'), row, col)
         if (cell.textContent == '') {
             cell.addEventListener('click', () => {
-                cell.textContent = 'X'
+                cell.textContent = turn.brush
+                board[row][col] = turn.brush
+                nextTurn()
+                clearBoard()
+                fillBoard()
             })
         } 
         boardHTML.appendChild(cell)
@@ -38,9 +52,9 @@ const boardFactory = (player1, player2) => {
 
 }
 
-const playerFactory = (name, write) => {
+const playerFactory = (name, brush) => {
 
-    return { name, write }
+    return { name, brush }
 
 }
 
