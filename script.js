@@ -50,7 +50,29 @@ const boardFactory = (player1, player2) => {
         else return null
     }
 
+    const checkDraw = () => {
+
+        let draw = true
+
+        board.forEach((row) => {
+            row.forEach((col) => {
+                if(col === '') {
+                    draw = false
+                }
+            })
+        });
+        
+        return draw
+
+    }
+
     const printWinner = (player) => {
+
+        if(checkDraw() === true) {
+            alert('Draw!')
+            return true
+        }
+
         if(player != null) {
             alert(`${player.name} wins!`)
             return true
