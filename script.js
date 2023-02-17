@@ -117,8 +117,15 @@ const playerFactory = (name, brush) => {
 
 }
 
-const board = boardFactory(
-    playerFactory('Javier', 'X'),
-    playerFactory('Lucas', '0'))
+const player1 = playerFactory('', 'X')
+const player2 = playerFactory('', '0')
+const board = boardFactory(player1, player2)
+const inputPlayer1 = document.querySelector('#player1')
+const inputPlayer2 = document.querySelector('#player2')
+
 board.clearBoard()
 board.fillBoard()
+
+inputPlayer1.addEventListener('input', (e) => {
+    player1.name = e.target.value
+})
