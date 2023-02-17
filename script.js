@@ -7,6 +7,7 @@ const boardFactory = (player1, player2) => {
         ["", "", ""],
     ]
     let turn = player1
+    let winner = false
 
     const nextTurn = () => {
         if (turn === player1) turn = player2
@@ -28,25 +29,25 @@ const boardFactory = (player1, player2) => {
     }
 
     const combinations = (player) => {
-        if(
+        if (
             (board[0][0] === player.brush && board[0][1] === player.brush && board[0][2] === player.brush)
-            ||(board[1][0] === player.brush && board[1][1] === player.brush && board[1][2] === player.brush)
-            ||(board[2][0] === player.brush && board[2][1] === player.brush && board[2][2] === player.brush)
+            || (board[1][0] === player.brush && board[1][1] === player.brush && board[1][2] === player.brush)
+            || (board[2][0] === player.brush && board[2][1] === player.brush && board[2][2] === player.brush)
 
-            ||(board[0][0] === player.brush && board[1][0] === player.brush && board[2][0] === player.brush)
-            ||(board[0][1] === player.brush && board[1][1] === player.brush && board[2][1] === player.brush)
-            ||(board[0][2] === player.brush && board[1][2] === player.brush && board[2][2] === player.brush)
+            || (board[0][0] === player.brush && board[1][0] === player.brush && board[2][0] === player.brush)
+            || (board[0][1] === player.brush && board[1][1] === player.brush && board[2][1] === player.brush)
+            || (board[0][2] === player.brush && board[1][2] === player.brush && board[2][2] === player.brush)
 
-            ||(board[0][0] === player.brush && board[1][1] === player.brush && board[2][2] === player.brush)
-            ||(board[0][2] === player.brush && board[1][1] === player.brush && board[2][0] === player.brush)
+            || (board[0][0] === player.brush && board[1][1] === player.brush && board[2][2] === player.brush)
+            || (board[0][2] === player.brush && board[1][1] === player.brush && board[2][0] === player.brush)
 
         ) return true
         else return false
     }
 
     const checkWinner = (player1, player2) => {
-        if(combinations(player1)) return player1 
-        else if(combinations(player2)) return player2
+        if (combinations(player1)) return player1
+        else if (combinations(player2)) return player2
         else return null
     }
 
@@ -56,24 +57,24 @@ const boardFactory = (player1, player2) => {
 
         board.forEach((row) => {
             row.forEach((col) => {
-                if(col === '') {
+                if (col === '') {
                     draw = false
                 }
             })
         });
-        
+
         return draw
 
     }
 
     const printWinner = (player) => {
 
-        if(checkDraw() === true) {
+        if (checkDraw() === true) {
             alert('Draw!')
             return true
         }
 
-        if(player != null) {
+        if (player != null) {
             alert(`${player.name} wins!`)
             return true
         } else return false
@@ -81,16 +82,16 @@ const boardFactory = (player1, player2) => {
 
     const fillCell = (row, col) => {
         const cell = setCellInfo(document.createElement('td'), row, col)
-        if (cell.textContent == '') {
+        boardHTML.appendChild(cell)
+        if (cell.textContent == '' && !winner) {
             cell.addEventListener('click', () => {
                 brushCell(cell, row, col)
+                winner = printWinner(checkWinner(player1, player2))
                 nextTurn()
                 clearBoard()
                 fillBoard()
-                printWinner(checkWinner(player1, player2))
             })
         }
-        boardHTML.appendChild(cell)
     }
 
     const clearBoard = () => {
