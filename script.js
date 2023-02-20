@@ -1,6 +1,34 @@
-const boardFactory = (player1, player2) => {
+const playerFactory = (name, brush) => {
 
-    const boardHTML = document.querySelector('.container')
+    return { name, brush }
+
+}
+
+const player1 = playerFactory('', 'X')
+const player2 = playerFactory('', '0')
+
+const nameModule = (() => {
+
+    const checkNames = () => {
+
+        if (inputPlayer1.value != '' && inputPlayer2.value != '') {
+            boardHTML.style.display = 'grid'
+        }
+
+        if (inputPlayer1.value === '' && inputPlayer2.value === '') {
+            boardHTML.style.display = 'none'
+            boardModule.clearBoardHTML()
+            boardModule.clearBoard()
+        }
+
+    }
+
+    return { checkNames }
+
+})(player1, player2);
+
+const boardModule = ((player1, player2) => {
+
     const board = [
         ["", "", ""],
         ["", "", ""],
@@ -88,14 +116,21 @@ const boardFactory = (player1, player2) => {
                 brushCell(cell, row, col)
                 winner = printWinner(checkWinner(player1, player2))
                 nextTurn()
-                clearBoard()
+                clearBoardHTML()
                 fillBoard()
             })
         }
     }
 
     const clearBoard = () => {
+        board = [
+            ["", "", ""],
+            ["", "", ""],
+            ["", "", ""],
+        ]
+    }
 
+    const clearBoardHTML = () => {
         while (boardHTML.firstChild) boardHTML.removeChild(boardHTML.firstChild)
     }
 
@@ -107,25 +142,23 @@ const boardFactory = (player1, player2) => {
         });
     }
 
-    return { board, fillBoard, clearBoard }
+    return { board, fillBoard, clearBoardHTML }
 
-}
+})(player1, player2);
 
-const playerFactory = (name, brush) => {
-
-    return { name, brush }
-
-}
-
-const player1 = playerFactory('', 'X')
-const player2 = playerFactory('', '0')
-const board = boardFactory(player1, player2)
+const boardHTML = document.querySelector('.container')
 const inputPlayer1 = document.querySelector('#player1')
 const inputPlayer2 = document.querySelector('#player2')
 
-board.clearBoard()
-board.fillBoard()
+boardModule.clearBoardHTML()
+boardModule.fillBoard()
 
 inputPlayer1.addEventListener('input', (e) => {
     player1.name = e.target.value
+    nameModule.checkNames()
+})
+
+inputPlayer2.addEventListener('input', (e) => {
+    player2.name = e.target.value
+    nameModule.checkNames()
 })
