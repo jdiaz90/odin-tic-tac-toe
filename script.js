@@ -10,17 +10,12 @@ const player2 = playerFactory('', '0')
 const nameModule = (() => {
 
     const checkNames = () => {
-
         if (inputPlayer1.value != '' && inputPlayer2.value != '') {
-            boardHTML.style.display = 'grid'
+            player1.name = inputPlayer1.value 
+            player2.name = inputPlayer2.value 
+            return true
         }
-
-        if (inputPlayer1.value === '' && inputPlayer2.value === '') {
-            boardHTML.style.display = 'none'
-            boardModule.clearBoardHTML()
-            boardModule.clearBoard()
-        }
-
+        else return false
     }
 
     return { checkNames }
@@ -123,11 +118,11 @@ const boardModule = ((player1, player2) => {
     }
 
     const clearBoard = () => {
-        board = [
-            ["", "", ""],
-            ["", "", ""],
-            ["", "", ""],
-        ]
+        board.forEach((row, indexRow) => {
+            row.forEach((col, indexCol) => {
+                board[indexRow][indexCol] = ''
+            })
+        });
     }
 
     const clearBoardHTML = () => {
@@ -142,23 +137,27 @@ const boardModule = ((player1, player2) => {
         });
     }
 
-    return { board, fillBoard, clearBoardHTML }
+    return { board, fillBoard, clearBoardHTML, clearBoard }
 
 })(player1, player2);
 
-const boardHTML = document.querySelector('.container')
+const modal = document.querySelector('#modal')
 const inputPlayer1 = document.querySelector('#player1')
 const inputPlayer2 = document.querySelector('#player2')
+const buttonPlay = document.querySelector('#buttonPlay')
+const boardHTML = document.querySelector('.container')
 
 boardModule.clearBoardHTML()
 boardModule.fillBoard()
 
-inputPlayer1.addEventListener('input', (e) => {
-    player1.name = e.target.value
-    nameModule.checkNames()
+window.addEventListener('load', () => {
+    window.modal.showModal()
 })
 
-inputPlayer2.addEventListener('input', (e) => {
-    player2.name = e.target.value
-    nameModule.checkNames()
+buttonPlay.addEventListener('click', () => {
+    if (nameModule.checkNames()) {
+        window.modal.close()
+    } else {
+        alert('We need the name of all the players.')
+    }
 })
