@@ -1,6 +1,10 @@
 const playerFactory = (name, brush) => {
 
-    return { name, brush }
+    let points = 0
+
+    const addPoint = () => points++
+
+    return { name, brush, addPoint }
 
 }
 
@@ -13,6 +17,8 @@ const nameModule = (() => {
         if (inputPlayer1.value != '' && inputPlayer2.value != '') {
             player1.name = inputPlayer1.value 
             player2.name = inputPlayer2.value 
+            divPlayer1Name.textContent = player1.name
+            divPlayer2Name.textContent = player2.name
             return true
         }
         else return false
@@ -92,13 +98,13 @@ const boardModule = ((player1, player2) => {
 
     const printWinner = (player) => {
 
-        if (checkDraw() === true) {
-            alert('Draw!')
-            return true
-        }
-
         if (player != null) {
             alert(`${player.name} wins!`)
+            return true
+        } 
+
+        if (checkDraw()) {
+            alert('Draw!')
             return true
         } else return false
     }
@@ -146,6 +152,8 @@ const inputPlayer1 = document.querySelector('#player1')
 const inputPlayer2 = document.querySelector('#player2')
 const buttonPlay = document.querySelector('#buttonPlay')
 const boardHTML = document.querySelector('.container')
+const divPlayer1Name = document.querySelector('.player1.name')
+const divPlayer2Name = document.querySelector('.player2.name')
 
 boardModule.clearBoardHTML()
 boardModule.fillBoard()
