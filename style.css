@@ -37,7 +37,7 @@ body {
     outline: none;
 }
 
-input[type="submit"] {
+button {
     background-color: #eacee3;
     color: #321c3b;
     padding: 20px 35px;
@@ -75,6 +75,12 @@ h2 {
 
 }
 
+.winner {
+    margin-top: 3rem;
+    color: white;
+    font-size: 2rem;
+}
+
 .result {
     margin-top: 3rem;
     color: white;
@@ -82,4 +88,8 @@ h2 {
     grid-template-rows: repeat(2, 1fr);
     grid-template-columns: repeat(2, minmax(150px, 1fr));
     max-width: 300px;
+}
+
+.buttons {
+    margin-top: 3rem;
 }

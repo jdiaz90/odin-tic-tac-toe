@@ -2,9 +2,9 @@ const playerFactory = (name, brush) => {
 
     let points = 0
 
-    const addPoint = () => points++
+    const addWin = () => points++
 
-    return { name, brush, addPoint }
+    return { name, brush, points, addWin }
 
 }
 
@@ -75,9 +75,17 @@ const boardModule = ((player1, player2) => {
     }
 
     const checkWinner = (player1, player2) => {
-        if (combinations(player1)) return player1
-        else if (combinations(player2)) return player2
-        else return null
+        if (combinations(player1)) {
+            player1.addWin()
+            divPlayer1Points.textContent = player1.points
+            return player1
+        } else if (combinations(player2)) { 
+            player2.addWin()
+            divPlayer2Points.textContent = player2.points
+            return player2 
+        } else {
+            return null
+        }
     }
 
     const checkDraw = () => {
@@ -99,12 +107,12 @@ const boardModule = ((player1, player2) => {
     const printWinner = (player) => {
 
         if (player != null) {
-            alert(`${player.name} wins!`)
+            divWinner.textContent = `${player.name} wins!`
             return true
         } 
 
         if (checkDraw()) {
-            alert('Draw!')
+            divWinner.textContent = 'Draw!'
             return true
         } else return false
     }
@@ -143,7 +151,15 @@ const boardModule = ((player1, player2) => {
         });
     }
 
-    return { board, fillBoard, clearBoardHTML, clearBoard }
+    const newRound = () => {
+        winner = false
+        clearBoard()
+        clearBoardHTML()
+        fillBoard()
+        turn = player1
+    }
+
+    return { board, fillBoard, clearBoardHTML, clearBoard, newRound }
 
 })(player1, player2);
 
@@ -154,6 +170,10 @@ const buttonPlay = document.querySelector('#buttonPlay')
 const boardHTML = document.querySelector('.container')
 const divPlayer1Name = document.querySelector('.player1.name')
 const divPlayer2Name = document.querySelector('.player2.name')
+const divWinner = document.querySelector('.winner')
+const divPlayer1Points = document.querySelector('.player1.points')
+const divPlayer2Points = document.querySelector('.player2.points')
+const buttonPlayAgain = document.querySelector('.buttons > button:first-child')
 
 boardModule.clearBoardHTML()
 boardModule.fillBoard()
@@ -168,4 +188,8 @@ buttonPlay.addEventListener('click', () => {
     } else {
         alert('We need the name of all the players.')
     }
+})
+
+buttonPlayAgain.addEventListener('click', () => {
+    boardModule.newRound()
 })
