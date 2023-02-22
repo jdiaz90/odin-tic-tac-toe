@@ -4,7 +4,14 @@ const playerFactory = (name, brush) => {
 
     const addWin = () => points++
 
-    return { name, brush, points, addWin }
+    return {
+        get points() {
+          return points;
+        },
+        name,
+        brush,
+        addWin
+      };
 
 }
 
@@ -189,6 +196,9 @@ buttonPlay.addEventListener('click', () => {
         alert('We need the name of all the players.')
     }
 })
+
+divPlayer1Points.textContent = player1.points
+divPlayer2Points.textContent = player2.points
 
 buttonPlayAgain.addEventListener('click', () => {
     boardModule.newRound()
