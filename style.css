@@ -51,6 +51,7 @@ button {
     background-color: #eacee3;
     color: #321c3b;
     padding: 20px 35px;
+    width: 100%;
 }
 
 .options > label {
