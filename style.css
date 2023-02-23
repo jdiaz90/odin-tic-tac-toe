@@ -29,7 +29,7 @@ body {
 .options {
     display: grid;
     gap: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
 }
 
 .options > label > input[type="text"] {
@@ -40,6 +40,11 @@ body {
 .options > label > input[type="text"]:focus {
     border-color: darkorange;
     outline: none;
+}
+
+.options > .error {
+    color: red;
+    visibility: hidden;
 }
 
 button {

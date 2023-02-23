@@ -21,14 +21,36 @@ const player2 = playerFactory('', '0')
 const nameModule = (() => {
 
     const checkNames = () => {
-        if (inputPlayer1.value != '' && inputPlayer2.value != '') {
+        /*if (inputPlayer1.value != '' && inputPlayer2.value != '') {
             player1.name = inputPlayer1.value 
             player2.name = inputPlayer2.value 
             divPlayer1Name.textContent = player1.name
             divPlayer2Name.textContent = player2.name
             return true
         }
-        else return false
+        else return false */
+
+        const divError = document.querySelector('#modal > .options > .error')
+
+        if (inputPlayer1.value === '' && inputPlayer2.value === '') {
+            divError.style.visibility = 'visible'
+            divError.textContent = 'Insert Player 1 & Player 2 names'
+            return false 
+        } else if(inputPlayer1.value === '') {
+            divError.style.visibility = 'visible'
+            divError.textContent = 'Insert Player 1 name'
+            return false 
+        } else if(inputPlayer2.value === '') {
+            divError.style.visibility = 'visible'
+            divError.textContent = 'Insert Player 2 name'
+            return false 
+        }else {
+            player1.name = inputPlayer1.value 
+            player2.name = inputPlayer2.value 
+            divPlayer1Name.textContent = player1.name
+            divPlayer2Name.textContent = player2.name
+            return true
+        }
     }
 
     return { checkNames }
@@ -192,9 +214,7 @@ window.addEventListener('load', () => {
 buttonPlay.addEventListener('click', () => {
     if (nameModule.checkNames()) {
         window.modal.close()
-    } else {
-        alert('We need the name of all the players.')
-    }
+    } 
 })
 
 divPlayer1Points.textContent = player1.points
