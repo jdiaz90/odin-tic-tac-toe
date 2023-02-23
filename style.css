@@ -3,6 +3,10 @@
     src: url('./fonts/Lazer84.ttf');
 }
 
+:root {
+    --width-app: 300px;
+}
+
 * {
     font-family: 'Lazer84', Courier, monospace;
     box-sizing: border-box;
@@ -10,7 +14,8 @@
 
 body {
     background-color: #321c3b;
-    padding: 1rem;
+    max-width: var(--width-app);
+    margin: 0 auto;
 }
 
 #modal {
@@ -61,7 +66,6 @@ h2 {
     display: grid;
     grid-template-rows: repeat(3, minmax(100px, 1fr));
     grid-template-columns: repeat(3, minmax(100px, 1fr));
-    max-width: 300px;
 }
 
 .container > .cell {
@@ -87,7 +91,6 @@ h2 {
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     grid-template-columns: repeat(2, minmax(150px, 1fr));
-    max-width: 300px;
 }
 
 .buttons {
